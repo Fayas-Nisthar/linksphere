@@ -1,0 +1,11 @@
+from django.views.generic import FormView,TemplateView,CreateView
+
+class signup (FormView):
+	template_name=""
+	form_class=       it's used for render only form to html pages
+
+
+
+class signup (TemplateView):
+	template_name=""    it's used for render templates to html pages
+	       

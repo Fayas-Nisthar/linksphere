@@ -16,7 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from socialapp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('register/',views.SignUpView.as_view(),name="register"),
+    path('signin/',views.SigninView.as_view(),name="signin"),
+    path('linksphere/index/',views.IndexView.as_view(),name="index"),
+    path('linksphere/logout/',views.SignOutView.as_view(),name="signout"),
+
 ]

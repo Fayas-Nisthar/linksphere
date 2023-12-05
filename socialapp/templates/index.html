@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    {%load static%}
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon"  href="{%static 'socialapp/images/logo.png'%}" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linksphere</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <!-- nav starts -->
+    <nav class="navbar fixed-top" style="background-color: rgb(137, 0, 130);">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img src="images/logowhite.png" alt="Logo" width="35" height="35" class="d-inline-block align-text-top">
+          </a><span class="me-auto fw-bold text-white">sphere</span>
+
+            <div class="dropdown me-5">
+                <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="images/profilepic.png"alt="Avatar" style="width:40px; border-radius: 50%; background-color: rgb(68, 68, 68);">
+                </button>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><a class="dropdown-item" href="#">Posts</a></li>
+                <li><a class="dropdown-item" href="#">Logout</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+    <!-- nav ends -->
+
+    <div class="container d-flex flex-column justify-content-center align-items-center mt-5">
+        <!-- post section start -->
+        <div class="card mt-4 h-50 w-25 border border-2 p-2">
+            <div class="d-flex flex-row">
+                <div class="me-2">
+                    <img src="images/profilepic.png" alt="Avatar" style="width:40px; border-radius: 50%; background-color: rgb(68, 68, 68);">
+                </div>
+                <div class="border border-1 rounded-2 w-100 p-2 btn">
+                    Start post
+                </div>
+            </div>
+        </div>
+        <!-- post section end -->
+
+
+        <!-- post section start -->
+        <div class="border border-1 rounded-4 mt-4 w-50">
+            <div class="ms-2 mt-2 mb-2">
+                <img src="images/profilepic.png" alt="Avatar" style="width:40px; border-radius: 50%; background-color: rgb(68, 68, 68);">
+                username, Uploaded date
+            </div>
+            <div>
+                <img src="images/post.png" class="h-auto w-100" alt="">
+            </div>
+            <div class="ms-2 mt-2 mb-2 d-flex align-items-start">
+                <i class="fa-solid fa-heart fs-4 text-danger btn"></i>
+                <i class="fa-solid fa-heart-crack fs-4 text-danger btn"></i>
+                <i class="fa-solid fa-comment-dots fs-4 text-secondary btn"></i>
+                <i class="fa-solid fa-location-arrow fs-4 btn"></i>
+            </div>
+            <hr class="ms-3 me-3">
+            <div class="p-2">
+                Captions, Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vel provident amet iure asperiores impedit vitae accusantium. Repellat sit aut, adipisci eius, necessitatibus ex, numquam perspiciatis voluptatem iste molestiae omnis consectetur!
+            </div>
+        </div>
+        <!-- post section end -->
+    </div>
+</body>
+</html>
