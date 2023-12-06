@@ -3,71 +3,144 @@
     {%load static%}
 <head>
     <meta charset="UTF-8">
-    <link rel="icon"  href="{%static 'socialapp/images/logo.png'%}" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linksphere</title>
+    <title>link sphere</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="{%static 'socialapp/css/index.css'%}">
 </head>
-<body>
+<body class="index">
     <!-- nav starts -->
-    <nav class="navbar fixed-top" style="background-color: rgb(137, 0, 130);">
+    <nav class="navbar fixed-top  p-0" style="	background: #FF416C;
+	background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
+	background: linear-gradient(to right, #FF4B2B, #FF416C);" >
         <div class="container-fluid">
           <a class="navbar-brand" href="#">
-            <img src="images/logowhite.png" alt="Logo" width="35" height="35" class="d-inline-block align-text-top">
-          </a><span class="me-auto fw-bold text-white">sphere</span>
+            <img src="{%static 'socialapp/images/linkspherena.png'%}" alt="Logo" width="100" height="h-auto" class="ms-5">
+          </a>
 
-            <div class="dropdown me-5">
-                <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="images/profilepic.png"alt="Avatar" style="width:40px; border-radius: 50%; background-color: rgb(68, 68, 68);">
-                </button>
-                <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li><a class="dropdown-item" href="#">Posts</a></li>
-                <li><a class="dropdown-item" href="#">Logout</a></li>
-                </ul>
+          <!-- search start -->
+            <div class="container mt-3 w-50 mb-2">
+                <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-danger rounded-start-0" type="submit">Search</button>
+                    </form>
+                </div>
+                </div>
             </div>
+        <!-- search end -->
 
+            <a href="post_form.html"><i class="fa-regular fa-square-plus ms-0 me-5 fs-3 text-white opacity-75"></i></a>
+
+        <!-- profile dropdown start -->
+
+        <div class="btn-group me-5">
+            <a href="#" class="btn-img img dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img class="profile-small" src="{%static 'socialapp/images/profilepic.png'%}" alt="Avatar">
+            </a>
+            <div class="dropdown-menu">
+            <a class="dropdown-item d-flex align-items-center" href="profile.html">
+                <div class="icon d-flex align-items-center justify-content-center mr-3">
+                    <span class="ion-ios-mail"></span>
+                </div>
+                Profile
+            </a>
+            <a class="dropdown-item d-flex align-items-center" href="#">
+                <div class="icon d-flex align-items-center justify-content-center mr-3">
+                    <span class="ion-ios-heart"></span>
+                </div>
+                All posts
+            </a>
+            <a class="dropdown-item d-flex align-items-center" href="profile_edit.html">
+                <div class="icon d-flex align-items-center justify-content-center mr-3">
+                    <span class="ion-ios-person-add"></span>
+                </div>
+                Edit Profile
+            </a>
+            <a class="dropdown-item d-flex align-items-center" href="{%url 'signout'%}">
+                <div class="icon d-flex align-items-center justify-content-center mr-3">
+                    <span class="ion-ios-power"></span>
+                </div>
+                Logout
+            </a>
+            </div>
         </div>
+
+            <!-- profile dropdown end -->
+
+
     </nav>
     <!-- nav ends -->
 
     <div class="container d-flex flex-column justify-content-center align-items-center mt-5">
         <!-- post section start -->
-        <div class="card mt-4 h-50 w-25 border border-2 p-2">
-            <div class="d-flex flex-row">
-                <div class="me-2">
-                    <img src="images/profilepic.png" alt="Avatar" style="width:40px; border-radius: 50%; background-color: rgb(68, 68, 68);">
-                </div>
-                <div class="border border-1 rounded-2 w-100 p-2 btn">
-                    Start post
-                </div>
-            </div>
-        </div>
-        <!-- post section end -->
-
-
-        <!-- post section start -->
         <div class="border border-1 rounded-4 mt-4 w-50">
             <div class="ms-2 mt-2 mb-2">
-                <img src="images/profilepic.png" alt="Avatar" style="width:40px; border-radius: 50%; background-color: rgb(68, 68, 68);">
+                <img class="profile-small" src="{%static 'socialapp/images/profilepic.png'%}" alt="Avatar">
                 username, Uploaded date
             </div>
             <div>
-                <img src="images/post.png" class="h-auto w-100" alt="">
+                <img src="{%static 'socialapp/images/sample.jpg'%}" class="h-auto w-100" alt="">
             </div>
             <div class="ms-2 mt-2 mb-2 d-flex align-items-start">
-                <i class="fa-solid fa-heart fs-4 text-danger btn"></i>
-                <i class="fa-solid fa-heart-crack fs-4 text-danger btn"></i>
-                <i class="fa-solid fa-comment-dots fs-4 text-secondary btn"></i>
-                <i class="fa-solid fa-location-arrow fs-4 btn"></i>
+                <div class="d-block flex-column">
+                    <div>
+                        <i class="fa-solid fa-heart fs-4 text-danger btn"></i>
+                    </div>
+                    <div>
+                        <span class="ms-2 spa">Like</span>
+                    </div>
+                </div>
+                <div class="d-block flex-column">
+                    <div>
+                        <i class="fa-solid fa-heart-crack fs-4 text-danger btn"></i>
+                    </div>
+                    <div>
+                        <span class="ms-2 spa">Dislike</span>
+                    </div>
+                </div>
+                <div class="d-block flex-column">
+                    <div>
+                        <i class="fa-solid fa-comment-dots fs-4 text-secondary btn"></i>
+                    </div>
+                    <div>
+                        <span class="ms-2 spa">comment</span>
+                    </div>
+                </div>
+                <div class="d-block flex-column">
+                    <div>
+                        <i class="fa-solid fa-location-arrow fs-4 btn"></i>
+                    </div>
+                </div>
+
             </div>
             <hr class="ms-3 me-3">
-            <div class="p-2">
+            <div class="d-flex justify-content-center align-items-center w-100">
+                <div>
+                    <img class="profile-xsmall ms-3" src="{%static 'socialapp/images/profilepic.png'%}" alt="">
+                </div>
+                <div class="ms-2 comment">
+                    <input type="text" name="" id="" placeholder="Message .........." class="border rounded-2 form-control">
+                </div>
+                <div>
+                    <button class="btn">Post</button>
+                </div>
+            </div>
+            <div class="p-2 ms-2">
                 Captions, Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vel provident amet iure asperiores impedit vitae accusantium. Repellat sit aut, adipisci eius, necessitatibus ex, numquam perspiciatis voluptatem iste molestiae omnis consectetur!
             </div>
         </div>
+
+        
         <!-- post section end -->
     </div>
 </body>

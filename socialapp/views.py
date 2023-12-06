@@ -11,9 +11,8 @@ from django.views import View
 class SignUpView(CreateView):
     template_name="register.html"
     form_class=RegistrationForm
-    
     def get_success_url(self):
-        return reverse ("register")
+        return reverse ("signin")
     
     # def post(self,request,*args,**kwargs):
     #     form=RegistrationForm(request.POST)

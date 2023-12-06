@@ -21,38 +21,42 @@
     </div>
     <div class="col-lg-5 col-md-4 col-sm-12 bg-white border rounded-3 me-5 mt-5 shadow-lg" >
        <div class="container ">
-        <div class="d-flex justify-content-center mt-5 ">
-        <h2 class="text-center fw-bolder fs-2 me-3"></h2>
-        <img src="{%static 'socialapp/images/logo.png'%}" alt="" style="height: 100px;width: 150px; box-shadow: 1px 1px 12px 2px black;" >
+        <h1 class="text-center fw-bold mt-4">Sign-Up</h1>
+        <div class="d-flex justify-content-center mt-3">
+        <img src="{%static 'socialapp/images/logo.png'%}" alt="" style="height: 100px;width: 200px;" >
     </div>
-        <form action="" method="post" class="mt-5 ms-4 ">
+    {%if form.error%}
+        {{form.errors}}
+    {%endif%}
+        <form action="" method="post" class="mt-3 ms-4 ">
+            {%csrf_token%}
             <div class="mb-3">
                 <i class="fa-solid fa-user icon " style="color:#050505; "></i>
-                <input type="text" class="form-control input border rounded fw-bold" id="exampleInputEmail1" aria-describedby="emailHelp"placeholder="User_name" >
+                <input type="text" name="username" class="form-control input border rounded fw-bold" id="exampleInputEmail1" aria-describedby="emailHelp"placeholder="User_name" >
             </div>
            
             <div class="mb-3">
                 <i class="fa-solid fa-envelope icon" style="color: #050505;"></i>
-                <input type="email" class="form-control input border rounded fw-bold" id="exampleInputEmail1" aria-describedby="emailHelp"placeholder="Email Name" >
+                <input type="email" name="email" class="form-control input border rounded fw-bold" id="exampleInputEmail1" aria-describedby="emailHelp"placeholder="Email Name" >
             </div>
             <div class="mb-3">
                 <i class="fa-solid fa-lock icon" style="color: #050505;"></i>
-                <input type="password" class="form-control input border rounded fw-bold" id="exampleInputEmail1" aria-describedby="emailHelp"placeholder="Password" >
+                <input type="password" name="password1" class="form-control input border rounded fw-bold" id="exampleInputEmail1" aria-describedby="emailHelp"placeholder="Password" >
             </div>
             <div class="mb-3">
                 <i class="fa-solid fa-lock icon" style="color: #050505;"></i>
-                <input type="password" class="form-control input border rounded fw-bold" id="exampleInputEmail1" aria-describedby="emailHelp"placeholder="Confirm Password" >
+                <input type="password" name="password2" class="form-control input border rounded fw-bold" id="exampleInputEmail1" aria-describedby="emailHelp"placeholder="Confirm Password" >
             </div>
             <div>
                 
             </div>
+            <div class="d-grid gap-2 col-6 mx-auto mt-3">
+                <button class="btn fw-bolder btn-warning " type="submit" >Register</button>
+            </div>
         </form>
-        <div class="d-grid gap-2 col-6 mx-auto mt-3">
-            <button class="btn fw-bolder btn-warning " type="button" >Register</button>
-        </div>
         <hr>
       <div class="text-center">
-        <a href="{%url 'signin'%}">Already have an account</a>
+        <a href="{%url 'signin'%}">Already have an account?</a>
       </div>
        </div>
     </div>
