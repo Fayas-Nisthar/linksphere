@@ -38,8 +38,8 @@
                 </div>
             </div>
         <!-- search end -->
-
-            <a href="post_form.html"><i class="fa-regular fa-square-plus ms-0 me-5 fs-3 text-white opacity-75"></i></a>
+        <a href="{%url 'index'%}"><i class="fa-solid fa-house fs-4 text-white me-5 opacity-75"></i></a>
+            <a href=""><i class="fa-regular fa-square-plus ms-0 me-5 fs-3 text-white opacity-75"></i></a>
 
         <!-- profile dropdown start -->
 
@@ -48,24 +48,26 @@
                 <img class="profile-small" src="{%static 'socialapp/images/profilepic.png'%}" alt="Avatar">
             </a>
             <div class="dropdown-menu">
-            <a class="dropdown-item d-flex align-items-center" href="profile.html">
+            <a class="dropdown-item d-flex align-items-center" href="{%url 'profile-details' request.user.profile.id%}">
                 <div class="icon d-flex align-items-center justify-content-center mr-3">
                     <span class="ion-ios-mail"></span>
                 </div>
                 Profile
             </a>
-            <a class="dropdown-item d-flex align-items-center" href="#">
+            <a class="dropdown-item d-flex align-items-center" href="{%url 'profile-list'%}">
                 <div class="icon d-flex align-items-center justify-content-center mr-3">
                     <span class="ion-ios-heart"></span>
                 </div>
-                All posts
+                All User
             </a>
-            <a class="dropdown-item d-flex align-items-center" href="profile_edit.html">
-                <div class="icon d-flex align-items-center justify-content-center mr-3">
-                    <span class="ion-ios-person-add"></span>
-                </div>
-                Edit Profile
-            </a>
+            {%if request.user.profile%}
+                <a class="dropdown-item d-flex align-items-center" href="{%url 'profile-update' request.user.profile.id%}">
+                    <div class="icon d-flex align-items-center justify-content-center mr-3">
+                        <span class="ion-ios-person-add"></span>
+                    </div>
+                    Edit Profile
+                </a>
+            {%endif%}
             <a class="dropdown-item d-flex align-items-center" href="{%url 'signout'%}">
                 <div class="icon d-flex align-items-center justify-content-center mr-3">
                     <span class="ion-ios-power"></span>
@@ -129,10 +131,10 @@
                     <img class="profile-xsmall ms-3" src="{%static 'socialapp/images/profilepic.png'%}" alt="">
                 </div>
                 <div class="ms-2 comment">
-                    <input type="text" name="" id="" placeholder="Message .........." class="border rounded-2 form-control">
+                    <input type="text" name="" id="" placeholder="Comment .........." class="border rounded-2 form-control">
                 </div>
                 <div>
-                    <button class="btn">Post</button>
+                    <button class="btn text-primary">Post</button>
                 </div>
             </div>
             <div class="p-2 ms-2">

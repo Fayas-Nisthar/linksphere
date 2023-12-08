@@ -17,12 +17,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from socialapp import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('register/',views.SignUpView.as_view(),name="register"),
-    path('signin/',views.SigninView.as_view(),name="signin"),
+    path('',views.SigninView.as_view(),name="signin"),
     path('linksphere/index/',views.IndexView.as_view(),name="index"),
     path('linksphere/logout/',views.SignOutView.as_view(),name="signout"),
+    path('likshpere/profile/<int:pk>/change/',views.ProfileUpdateView.as_view(),name="profile-update"),
+    path('linkshpere/profile/<int:pk>/',views.ProfileDetailView.as_view(),name="profile-details"),
+    path('linkshpere/profile/all/',views.ProfileListView.as_view(),name="profile-list"),
 
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,9 +1,10 @@
 from django.shortcuts import render,redirect
 from django.urls import reverse
-from django.views.generic import FormView,TemplateView,CreateView
-from socialapp.forms import RegistrationForm,LoginForm
+from django.views.generic import FormView,TemplateView,CreateView,UpdateView,DetailView,ListView
+from socialapp.forms import RegistrationForm,LoginForm,UserProfileForm
 from django.contrib.auth import authenticate,login,logout
 from django.views import View
+from socialapp.models import UserProfile
 
 # Create your views here.
 
@@ -49,6 +50,22 @@ class SignOutView(View):
     def get(self,request,*args,**kwargs):
         logout(request)
         return redirect("signin")
+    
+class ProfileUpdateView(UpdateView):
+    template_name="profile_edit.html"
+    form_class=UserProfileForm
+    model=UserProfile
+    def get_success_url(self):
+        return reverse("index")
+    
 
+class ProfileDetailView(DetailView):
+    template_name="profile_detail.html"
+    model=UserProfile
+    context_object_name="data"
 
+class ProfileListView(View):
+    def get(self,request,*args,**kwargs):
+        qs=UserProfile.objects.all().exclude(user=request.user)
+        return render (request,"profile_list.html",{"data":qs})
     
