@@ -29,5 +29,7 @@ urlpatterns = [
     path('likshpere/profile/<int:pk>/change/',views.ProfileUpdateView.as_view(),name="profile-update"),
     path('linkshpere/profile/<int:pk>/',views.ProfileDetailView.as_view(),name="profile-details"),
     path('linkshpere/profile/all/',views.ProfileListView.as_view(),name="profile-list"),
+    path('linksphere/post/add/',views.PostUploadView.as_view(),name="upload-post"),
+    path('linksphere/profile/<int:pk>/follow/',views.FollowsView.as_view(),name="follow"),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

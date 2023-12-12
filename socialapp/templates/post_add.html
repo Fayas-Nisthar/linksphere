@@ -1,0 +1,30 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block body_block%}
+<div class="container list">
+    <div class="vh-100 container d-flex flex-column justify-content-center align-items-center">
+        
+        <form action="" method="post" enctype="multipart/form-data" class="border-0 rounded-3 form-control p-0 w-75 shadow">
+            {%csrf_token%}
+            <div class="row p-5">
+                <div class="col-6">
+                    <input class="load" type="file" id="file">
+                    <label class="upload d-flex justify-content-center align-items-center" for="file"><img src="{%static 'socialapp/images/upload.png'%}" alt="">Upload Image</label>
+
+                </div>
+                <div class="col-6">
+                    <div class="ms-2 mt-2 mb-2">
+                        <img class="profile-small" src="{%static 'socialapp/images/profilepic.png'%}" alt="Avatar">
+                        {{request.user}}
+                    </div>
+                    <div class="mb-4">
+                        <textarea name="title" class="form-control" placeholder="Write a caption..." id="" cols="30" rows="5"></textarea>                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn-grad clr rounded-pill mt-4">Post</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{%endblock%}

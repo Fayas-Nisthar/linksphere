@@ -1,10 +1,12 @@
+from django.forms.models import BaseModelForm
+from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.urls import reverse
 from django.views.generic import FormView,TemplateView,CreateView,UpdateView,DetailView,ListView
-from socialapp.forms import RegistrationForm,LoginForm,UserProfileForm
+from socialapp.forms import RegistrationForm,LoginForm,UserProfileForm,PostForm
 from django.contrib.auth import authenticate,login,logout
 from django.views import View
-from socialapp.models import UserProfile
+from socialapp.models import UserProfile,Posts
 
 # Create your views here.
 
@@ -43,8 +45,18 @@ class SigninView(FormView):
         print("failed")
         return render (request,"signin.html",{"form":form})
     
-class IndexView(TemplateView):
+class IndexView(CreateView,ListView):
     template_name="index.html"
+    model=Posts
+    form_class=PostForm
+    context_object_name="data"
+
+    def form_valid(self,form):
+        form.instance.user=self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse("index")
 
 class SignOutView(View):
     def get(self,request,*args,**kwargs):
@@ -60,7 +72,7 @@ class ProfileUpdateView(UpdateView):
     
 
 class ProfileDetailView(DetailView):
-    template_name="profile_detail.html"
+    template_name="profile_details.html"
     model=UserProfile
     context_object_name="data"
 
@@ -69,3 +81,16 @@ class ProfileListView(View):
         qs=UserProfile.objects.all().exclude(user=request.user)
         return render (request,"profile_list.html",{"data":qs})
     
+class FollowsView(View):
+    def post(self,request,*args,**kwargs):
+        id=kwargs.get("pk")
+        profile_object=UserProfile.objects.get(id=id)
+        action=request.POST.get("action")
+        if action == "follow":
+            request.user.profile.following.add(profile_object)
+        elif action == "unfollow":
+            request.user.profile.following.remove(profile_object)
+        return redirect("profile-list")
+
+class PostUploadView(TemplateView):
+    template_name="post_add.html"
