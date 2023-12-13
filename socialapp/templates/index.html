@@ -7,7 +7,11 @@
                 <div class="container rounded-pill post p-2 mt-3 d-flex justify-content-evenly">
                     {%csrf_token%}
                     <div class="">
-                        <img class="profile-small ms-3 me-3" src="{%static 'socialapp/images/profilepic.png'%}" alt="">
+                        {%if request.user.profile.profile_pic%}
+                        <img class="profile-small" src="{{request.user.profile.profile_pic.url}}" alt="Avatar">
+                      {%else%}
+                        <img class="profile-small" src="{%static 'socialapp/images/profilepic.png'%}" alt="Avatar">
+                      {%endif%}
                     </div>
                     <div class="">
                         <input class="load" name="post_image" type="file" id="file" accept="image/*">
@@ -22,18 +26,28 @@
                 </div>
             </form>
             <!-- ======== post add end ====== -->
+            
 
-
-
+            {%for post in data%}
             <div class="container mb-5">
                 <!-- post section start -->
                 <div class="border border-1 bg-secondary bg-opacity-10 rounded-4 mt-4 w-50">
                     <div class="ms-2 mt-2 mb-2">
+                      {%if post.user.profile.profile_pic%}
+                        <img class="profile-small" src="{{post.user.profile.profile_pic.url}}" alt="Avatar">
+                      {%else%}
                         <img class="profile-small" src="{%static 'socialapp/images/profilepic.png'%}" alt="Avatar">
-                        username <small class="text-body-secondary">3 mins ago</small>
+                      {%endif%}
+
+                        {{post.user}} <small class="text-body-secondary">3 mins ago</small>
                     </div>
                     <div>
-                        <img src="{%static 'socialapp/images/sample.jpg'%}" class="h-auto w-100" alt="">
+                        {%if post.post_image%}
+                            <img src="{{post.post_image.url}}" class="h-auto w-100" alt=""> 
+                        {%else%}
+                            <img src="{%static 'images/sample'%}" class="h-auto w-100" alt=""> 
+                        {%endif%}
+
                     </div>
                     <div class="ms-2 mt-2 mb-2 d-flex align-items-start">
                         <div class="d-block flex-column">
@@ -63,6 +77,7 @@
                     </div>
                     <hr class="ms-3 me-3">
                     <div class="p-2 ms-2">
+                        {{post.title}}
                     </div>
                         <div class="d-flex align-items-center mb-4 p-3">
                             <div>
@@ -79,5 +94,6 @@
                 </div>
                 <!-- post section end -->
             </div>
+            {%endfor%}
         </div>
 {%endblock%}
