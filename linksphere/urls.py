@@ -31,5 +31,7 @@ urlpatterns = [
     path('linkshpere/profile/all/',views.ProfileListView.as_view(),name="profile-list"),
     path('linksphere/post/add/',views.PostUploadView.as_view(),name="upload-post"),
     path('linksphere/profile/<int:pk>/follow/',views.FollowsView.as_view(),name="follow"),
+    path('linksphere/post/<int:pk>/like/',views.PostLikeView.as_view(),name="like"),
+    path('linksphere/post/<int:pk>/comment/add/',views.CommentView.as_view(),name="comment"),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

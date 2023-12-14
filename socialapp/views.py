@@ -3,10 +3,10 @@ from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.urls import reverse
 from django.views.generic import FormView,TemplateView,CreateView,UpdateView,DetailView,ListView
-from socialapp.forms import RegistrationForm,LoginForm,UserProfileForm,PostForm
+from socialapp.forms import RegistrationForm,LoginForm,UserProfileForm,PostForm,CommentForm
 from django.contrib.auth import authenticate,login,logout
 from django.views import View
-from socialapp.models import UserProfile,Posts
+from socialapp.models import UserProfile,Posts,Comments
 
 # Create your views here.
 
@@ -94,3 +94,26 @@ class FollowsView(View):
 
 class PostUploadView(TemplateView):
     template_name="post_add.html"
+
+class PostLikeView(View):
+    def post(self,request,*args,**kwargs):
+        id=kwargs.get("pk")
+        post_object=Posts.objects.get(id=id)
+        action=request.POST.get("action")
+        if action == "like":
+            post_object.liked_by.add(request.user)
+        elif action == "dislike":
+            post_object.liked_by.remove(request.user)
+        return redirect ("index")
+    
+class CommentView(CreateView):
+    template_name="index.html"
+    form_class=CommentForm
+    def get_success_url(self):
+        return reverse("index")
+    def form_valid(self,form):
+        id=self.kwargs.get("pk")
+        post_object=Posts.objects.get(id=id)
+        form.instance.user=self.request.user
+        form.instance.post=post_object
+        return super().form_valid(form) 
