@@ -1,3 +1,5 @@
+from typing import Any
+from django.db import models
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
@@ -50,13 +52,16 @@ class IndexView(CreateView,ListView):
     model=Posts
     form_class=PostForm
     context_object_name="data"
-
     def form_valid(self,form):
         form.instance.user=self.request.user
         return super().form_valid(form)
-
     def get_success_url(self):
         return reverse("index")
+    def get_queryset(self):
+        blocked_profiles=self.request.user.profile.block.all()
+        blocked_profile_id=[u.user_id for u in blocked_profiles]
+        qs=Posts.objects.all().exclude(user__id__in=blocked_profile_id).order_by("-created_date")
+        return qs
 
 class SignOutView(View):
     def get(self,request,*args,**kwargs):
@@ -92,8 +97,14 @@ class FollowsView(View):
             request.user.profile.following.remove(profile_object)
         return redirect("profile-list")
 
-class PostUploadView(TemplateView):
+class PostUploadView(CreateView):
     template_name="post_add.html"
+    form_class=PostForm
+    def form_valid(self,form):
+        form.instance.user=self.request.user
+        return super().form_valid(form)
+    def get_success_url(self):
+        return reverse("index")
 
 class PostLikeView(View):
     def post(self,request,*args,**kwargs):
@@ -116,4 +127,15 @@ class CommentView(CreateView):
         post_object=Posts.objects.get(id=id)
         form.instance.user=self.request.user
         form.instance.post=post_object
-        return super().form_valid(form) 
+        return super().form_valid(form)
+
+class ProfileBlockView(View):
+    def post(self,request,*args,**kwargs):
+        id=kwargs.get("pk") 
+        profile_obj=UserProfile.objects.get(id=id)
+        action=request.POST.get("action")
+        if action == "block":
+            request.user.profile.block.add(profile_obj)
+        elif action == "unblock":
+            request.user.profile.block.remove(profile_obj)
+        return redirect("index")

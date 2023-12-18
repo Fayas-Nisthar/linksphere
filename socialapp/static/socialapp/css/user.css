@@ -99,6 +99,7 @@ form input[type="file"] {
 
 .section {
     padding: 50px;
+    padding-bottom: 0;
     padding-left: 0;
     width: 95%;
     position: relative;
@@ -260,4 +261,12 @@ font-size: 12px;
 .post{
   width: 40%;
   background-color: #f0f1f2;
+}
+.go-to{
+  position: relative;
+}
+.go-to .block{
+  position: absolute;
+  left: 544px;
+  top: 3%;
 }

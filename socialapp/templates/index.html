@@ -36,7 +36,7 @@
                 <div class="border border-1 bg-secondary bg-opacity-10 rounded-4 mt-4 w-50">
                     <div class="ms-2 mt-2 mb-2">
                       {%if post.user.profile.profile_pic%}
-                        <img class="profile-small" src="{{post.user.profile.profile_pic.url}}" alt="Avatar" >
+                        <img class="profile-small" src="{{post.user.profile.profile_pic.url}}" alt="Avatar" height="35px">
                       {%else%}
                         <img class="profile-small" src="{%static 'socialapp/images/profilepic.png'%}" alt="Avatar">
                       {%endif%}

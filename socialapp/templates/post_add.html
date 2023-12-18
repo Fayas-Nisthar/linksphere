@@ -8,13 +8,17 @@
             {%csrf_token%}
             <div class="row p-5">
                 <div class="col-6">
-                    <input class="load" type="file" id="file">
+                    <input class="load" name="post_image" type="file" id="file" accept="image/*">
                     <label class="upload d-flex justify-content-center align-items-center" for="file"><img src="{%static 'socialapp/images/upload.png'%}" alt="">Upload Image</label>
 
                 </div>
                 <div class="col-6">
                     <div class="ms-2 mt-2 mb-2">
+                      {%if request.user.profile.profile_pic%}
+                        <img class="profile-small" src="{{request.user.profile.profile_pic.url}}" alt="Avatar" style="height: 30px;">
+                      {%else%}
                         <img class="profile-small" src="{%static 'socialapp/images/profilepic.png'%}" alt="Avatar">
+                      {%endif%}
                         {{request.user}}
                     </div>
                     <div class="mb-4">

@@ -9,6 +9,29 @@
                     <div class="col-lg-6">
                         <div class="about-text go-to">
                             <h3 class="dark-color">{{data}}</h3>
+                         {%if request.user != data.user%}
+                            <div class="btn-group block">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <i class="fa-solid fa-bars"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                  <form action="{%url 'block' data.id%}" method="post">
+                                   {%csrf_token%}
+                                    {%if data in request.user.profile.block.all%}
+                                    <li>
+                                        <button class="dropdown-item " type="submit" name="action" value="unblock">Unblock</button>
+                                    </li>
+                                    {%else%}
+                                    <li>
+                                        <button class="dropdown-item text-danger" type="submit" name="action" value="block">Block</button>
+                                    </li>
+                                    {%endif%}
+                                  </form>
+                                </ul>
+                            </div>
+                          {%endif%}
+                              
+
                             {%if data.user == request.user%}
                                 <a class="btn btn-outline-dark" href="{%url 'profile-update' request.user.profile.id%}">Edit profile</a>
                             {%endif%}
@@ -59,7 +82,7 @@
                     </div>
                 </div>
                 <div class="counter">
-                    <div class="row">
+                    <div class="row d-flex justify-content-evenly">
                         <div class="col-6 col-lg-3">
                             <div class="count-data text-center">
                                 <h6 class="count h2" data-to="500" data-speed="500">{{data.following.count}}</h6>
@@ -72,12 +95,14 @@
                                 <p class="m-0px font-w-600">Followers</p>
                             </div>
                         </div>
+                        {%if request.user == data.user%}
                         <div class="col-6 col-lg-3">
                             <div class="count-data text-center">
                                 <h6 class="count h2" data-to="850" data-speed="850">{{data.block.count}}</h6>
                                 <p class="m-0px font-w-600">Blocked</p>
                             </div>
                         </div>
+                        {%endif%}
                         <div class="col-6 col-lg-3">
                             <div class="count-data text-center">
                                 <h6 class="count h2" data-to="190" data-speed="190">{{data.user.userpost.all.count}}</h6>
@@ -88,5 +113,16 @@
                 </div>
             </div>
         </section>
+        <div class="row ms-1 mt-2 mb-5">
+            {%for img in data.user.userpost.all%}
+                {%if img.post_image%}
+                <div class="col-4">
+
+                    <img src="{{img.post_image.url}}" class="h-100 w-100" alt="">
+                
+                </div>
+                {%endif%}
+            {%endfor%}
+        </div>
      </div>
 {%endblock%}
