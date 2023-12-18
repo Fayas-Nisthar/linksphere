@@ -1,9 +1,7 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
-
 from datetime import datetime
-
 from django.utils import timezone
 
 # Create your models here.
@@ -45,11 +43,14 @@ class Stories(models.Model):
     title=models.CharField(max_length=200)
     post_image=models.ImageField(upload_to="stories",null=True,blank=True)
     created_date=models.DateTimeField(auto_now_add=True)
-    # exp=created_date + timezone.timedelta(days=1)
     expiry_date=models.DateTimeField()
 
     def __str__(self):
         return self.title
+    
+    def save(self,*args,**kwargs):
+        self.expiry_date=self.created_date+timezone.timedelta(days=1)
+        super().save(*args,**kwargs)
     
 
 def create_profile(sender,created,instance,**kwargs):

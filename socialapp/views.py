@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.urls import reverse
 from django.views.generic import FormView,TemplateView,CreateView,UpdateView,DetailView,ListView
-from socialapp.forms import RegistrationForm,LoginForm,UserProfileForm,PostForm,CommentForm
+from socialapp.forms import RegistrationForm,LoginForm,UserProfileForm,PostForm,CommentForm,StorieForm
 from django.contrib.auth import authenticate,login,logout
 from django.views import View
 from socialapp.models import UserProfile,Posts,Comments
@@ -59,7 +59,7 @@ class IndexView(CreateView,ListView):
         return reverse("index")
     def get_queryset(self):
         blocked_profiles=self.request.user.profile.block.all()
-        blocked_profile_id=[u.user_id for u in blocked_profiles]
+        blocked_profile_id=[pr.user.id for pr in blocked_profiles]
         qs=Posts.objects.all().exclude(user__id__in=blocked_profile_id).order_by("-created_date")
         return qs
 
@@ -138,4 +138,14 @@ class ProfileBlockView(View):
             request.user.profile.block.add(profile_obj)
         elif action == "unblock":
             request.user.profile.block.remove(profile_obj)
+        return redirect("index")
+
+
+class StorieCreateView(View):
+    def post(self,request,*args,**kwargs):
+        form=StorieForm(request.POST,files=request.FILES)
+        if form.is_valid():
+            form.instance.user=request.user
+            form.save()
+            return redirect("index")
         return redirect("index")
