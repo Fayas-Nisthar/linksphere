@@ -34,5 +34,6 @@ urlpatterns = [
     path('linksphere/post/<int:pk>/like/',views.PostLikeView.as_view(),name="like"),
     path('linksphere/post/<int:pk>/comment/add/',views.CommentView.as_view(),name="comment"),
     path('linksphere/profile/<int:pk>/block/',views.ProfileBlockView.as_view(),name="block"),
+    path('linksphere/storie/add/',views.StorieCreateView.as_view(),name="storie-create"),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

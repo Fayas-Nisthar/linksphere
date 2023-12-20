@@ -7,8 +7,9 @@ from django.urls import reverse
 from django.views.generic import FormView,TemplateView,CreateView,UpdateView,DetailView,ListView
 from socialapp.forms import RegistrationForm,LoginForm,UserProfileForm,PostForm,CommentForm,StorieForm
 from django.contrib.auth import authenticate,login,logout
+from django.utils import timezone
 from django.views import View
-from socialapp.models import UserProfile,Posts,Comments
+from socialapp.models import UserProfile,Posts,Stories
 
 # Create your views here.
 
@@ -62,6 +63,11 @@ class IndexView(CreateView,ListView):
         blocked_profile_id=[pr.user.id for pr in blocked_profiles]
         qs=Posts.objects.all().exclude(user__id__in=blocked_profile_id).order_by("-created_date")
         return qs
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data(**kwargs)
+        current_date=timezone.now()
+        context["stories"]=Stories.objects.filter(expiry_date__gte=current_date)
+        return context
 
 class SignOutView(View):
     def get(self,request,*args,**kwargs):

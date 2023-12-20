@@ -49,7 +49,7 @@ class Stories(models.Model):
         return self.title
     
     def save(self,*args,**kwargs):
-        self.expiry_date=self.created_date+timezone.timedelta(days=1)
+        self.expiry_date=timezone.now()+timezone.timedelta(days=1)
         super().save(*args,**kwargs)
     
 

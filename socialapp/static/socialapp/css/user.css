@@ -81,7 +81,6 @@ a{
 }
 
 form input[type="file"] {
-          display: none;
           cursor: pointer;
  }
  .btn-grad {
