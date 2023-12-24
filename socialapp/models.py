@@ -20,7 +20,7 @@ class UserProfile(models.Model):
     
 class Posts(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="userpost")
-    title=models.CharField(max_length=200)
+    title=models.CharField(max_length=200,null=True,blank=True)
     post_image=models.ImageField(upload_to="posters",null=True,blank=True)
     created_date=models.DateTimeField(auto_now_add=True)
     liked_by=models.ManyToManyField(User,related_name="post_like")
@@ -40,16 +40,17 @@ class Comments(models.Model):
 
 class Stories(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="userstories")
-    title=models.CharField(max_length=200)
-    post_image=models.ImageField(upload_to="stories",null=True,blank=True)
+    title=models.CharField(max_length=200,null=True,blank=True)
+    post_image=models.ImageField(upload_to="stories")
     created_date=models.DateTimeField(auto_now_add=True)
     expiry_date=models.DateTimeField()
 
     def __str__(self):
-        return self.title
+        return self.post_image
     
     def save(self,*args,**kwargs):
-        self.expiry_date=timezone.now()+timezone.timedelta(days=1)
+        if not self.expiry_date:    
+            self.expiry_date=timezone.now()+timezone.timedelta(days=1)
         super().save(*args,**kwargs)
     
 

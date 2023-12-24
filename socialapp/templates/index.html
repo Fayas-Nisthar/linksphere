@@ -1,37 +1,66 @@
 {%extends 'base.html'%}
 {%load static%}
 {%block body_block%}
-        <div class="container list ">
-            <!-- ======= post add start ======= -->
-            <!-- <form action="" method="post" enctype="multipart/form-data">
-                <div class="container rounded-pill post p-2 mt-3 d-flex justify-content-evenly">
-                    {%csrf_token%}
-                    <div class="">
-                      {%if request.user.profile.profile_pic%}
-                        <img class="profile-small" src="{{request.user.profile.profile_pic.url}}" alt="Avatar" style="height: 30px;">
-                      {%else%}
-                        <img class="profile-small" src="{%static 'socialapp/images/profilepic.png'%}" alt="Avatar">
-                      {%endif%}
-                    </div>
-                    <div class="">
-                        <input class="load" name="post_image" type="file" id="file" accept="image/*">
-                        <label class="upload d-flex justify-content-center align-items-center" style="width: 60px;" for="file"><img src="{%static 'socialapp/images/upload.png'%}" style="width: 30px;" alt=""></label>
-                    </div>
-                    <div class="">
-                        <input class="form-control rounded-pill" type="text" name="title" id="" placeholder="captions...">
-                    </div>
-                    <div class="">
-                        <button class="btn btn-primary" type="submit">Post</button>
+        <div class="container list mt-2 ">
+            <!-- -- modal -- -->
+            <div class=" d-flex">
+                <a href=""data-bs-toggle="modal" data-bs-target="#exampleModal" class="text-dark d-flex flex-column align-items-start ">
+                    {%if request.user.profile.profile_pic%}
+                        <img src="{{request.user.profile.profile_pic.url}}" alt="" class="border rounded-circle pro-relative" style="height: 100px;width: 100px;">
+                    {%else%}
+                        <img src="{%static 'socialapp/images/profilepic.png'%}" alt="" class="border rounded-circle bg-secondary pro-relative" style="height: 100px;width: 100px;">
+                    {%endif%}
+                    <span class="pro-absolute translate-middle badge rounded-circle bg-dark"><i class="fa-solid fa-plus"></i></span>
+                    <span class="ms-3">Add Story</span>
+                </a>
+                <div class="d-flex container w-50" style="margin-left: 0; margin-right: 0;">
+                    {%for st in stories%}
+                    <article>
+                        {%if st.post_image%}
+                        <div class="d-flex flex-column justify-content-center text-center me-1">
+                            <img src="{{st.post_image.url}}" alt="" class="border rounded-circle bg-dark text-white text-center " style="height: 100px;width: 100px;">
+                            {{st.user}}
+                        </div>
+                        {%else%}
+                        <div class="d-flex flex-column justify-content-center text-center">
+                            <img src="{{st.user.profile.profile_pic.url}}" alt="" class="border rounded-circle bg-dark text-white text-center " style="height: 100px;width: 100px;">
+                            {{st.user}}
+                        </div>      
+                        {%endif%}
+                    </article>
+                    {%endfor%}
+                </div>
+                <div class="">
+                    <strong>Suggested for you</strong>
+                    <div>
+                        {%for profile in profiles%}
+                        <div class="d-flex mt-3">
+                            <div class="">
+                                {%if profile.profile_pic%}
+                                    <img class="profile-small me-2" src="{{profile.profile_pic.url}}" alt="Avatar" height="35px">
+                                {%else%}
+                                    <img class="profile-small me-2" src="{%static 'socialapp/images/profilepic.png'%}" alt="Avatar">
+                                {%endif%}
+                            </div>
+                            <div class="d-flex flex-column" style="margin-top: -6px;">
+                                <strong>{{profile.user}}</strong>
+                                <small class="text-body-secondary">{{profile.followed_by.count}} Followers</small>
+                            </div>
+                            <div class="ms-3">
+                                <form action="{%url 'follow' profile.id%}" method="post" class="d-flex justify-content-evenly">
+                                    {%csrf_token%}
+                                    {%if profile in request.user.profile.following.all%}
+                                      <button type="submit" class="btn" name="action" value="unfollow">Unfollow</button>
+                                    {%else%}
+                                      <button type="submit" class="btn text-primary" name="action" value="follow">Follow</button>
+                                    {%endif%}
+                                </form>
+                            </div>
+                        </div>
+                        {%endfor%}
                     </div>
                 </div>
-            </form> -->
-            <!-- ======== post add end ====== -->
-
-            <!-- -- modal -- -->
-                <button class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    <i class="fa-solid fa-plus border border-3 p-2"></i>
-                </button>
-
+            </div>
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                       <div class="modal-content">
@@ -45,10 +74,6 @@
             
                         <div class="modal-body">
                             
-                            <div class="mb-3">
-                                <label for="">title</label>
-                                <input type="text" class="form-control" name="title">
-                            </div>
                             <div class="mb-3">
                                 <input type="file" class="form-control" name="post_image" accept="image/*">
                             </div>
@@ -64,33 +89,15 @@
                     </div>
                   </div>        
             <!-- -- -- modal -- -- -->
-            <div class="d-flex container w-50 ">
-                {%for st in stories%}
-                <article>
-                    {%if st.post_image%}
-                    <div class="d-flex flex-column justify-content-center text-center me-1">
-                        <img src="{{st.post_image.url}}" alt="" class="border rounded-circle bg-dark text-white text-center " style="height: 100px;width: 100px;">
-                        {{st.user}}
-                    </div>
-                    {%else%}
-                    <div class="d-flex flex-column justify-content-center text-center">
-                        <img src="{{st.user.profile.profile_pic.url}}" alt="" class="border rounded-circle bg-dark text-white text-center " style="height: 100px;width: 100px;">
-                        {{st.user}}
-                    </div>      
-                    {%endif%}
-
-                </article>
-                {%endfor%}
-            </div>
-
             {%if form.errors%}
                 {{form.errors}}
             {%endif%}
 
-            {%for post in data%}
-            <div class="container mb-5">
+            <div class="post-position">
+                {%for post in data%}
+              <div class="container mb-5 w-50" style="margin-left: 0;">
                 <!-- post section start -->
-                <div class="border border-1 bg-secondary bg-opacity-10 rounded-4 mt-4 w-50">
+                <div class="border border-1 bg-secondary bg-opacity-10  rounded-4 mt-4 w-100">
                     <div class="ms-2 mt-2 mb-2">
                       {%if post.user.profile.profile_pic%}
                         <img class="profile-small" src="{{post.user.profile.profile_pic.url}}" alt="Avatar" height="35px">
@@ -107,7 +114,9 @@
 
                     </div>
                     <div class="p-2 ms-2">
-                        {{post.title}}
+                        {%if post.title%}
+                            {{post.title}}
+                        {%endif%}
                     </div>
                     <div class="ms-2 mt-2 mb-2 d-flex align-items-start">
                         <form action="{%url 'like' post.id%}" method="post" class="d-flex">
@@ -174,7 +183,8 @@
                         
                 </div>
                 <!-- post section end -->
+              </div>
+              {%endfor%}
             </div>
-            {%endfor%}
         </div>
 {%endblock%}

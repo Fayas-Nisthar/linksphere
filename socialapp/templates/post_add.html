@@ -5,30 +5,50 @@
     <div class="vh-100 container d-flex flex-column justify-content-center align-items-center">
         
         <form action="" method="post" enctype="multipart/form-data" class="border-0 rounded-3 form-control p-0 w-75 shadow">
-            {%csrf_token%}
+            {% csrf_token %}
             <div class="row p-5">
                 <div class="col-6">
-                    <input class="load" name="post_image" type="file" id="file" accept="image/*">
-                    <label class="upload d-flex justify-content-center align-items-center" for="file"><img src="{%static 'socialapp/images/upload.png'%}" alt="">Upload Image</label>
-
+                    <input class="load" name="post_image" type="file" id="file" accept="image/*" onchange="previewImage(this)">
+                    <label class="upload d-flex justify-content-center align-items-center" for="file">
+                        <img src="{% static 'socialapp/images/upload.png' %}" class="upload-img" alt="">
+                    </label>
+                    <div class="d-flex justify-content-center">Upload Image</div>
                 </div>
                 <div class="col-6">
                     <div class="ms-2 mt-2 mb-2">
-                      {%if request.user.profile.profile_pic%}
-                        <img class="profile-small" src="{{request.user.profile.profile_pic.url}}" alt="Avatar" style="height: 30px;">
-                      {%else%}
-                        <img class="profile-small" src="{%static 'socialapp/images/profilepic.png'%}" alt="Avatar">
-                      {%endif%}
-                        {{request.user}}
+                        {% if request.user.profile.profile_pic %}
+                            <img class="profile-small" src="{{ request.user.profile.profile_pic.url }}" alt="Avatar" style="height: 30px;">
+                        {% else %}
+                            <img class="profile-small" src="{% static 'socialapp/images/profilepic.png' %}" alt="Avatar">
+                        {% endif %}
+                        {{ request.user }}
                     </div>
                     <div class="mb-4">
-                        <textarea name="title" class="form-control" placeholder="Write a caption..." id="" cols="30" rows="5"></textarea>                    </div>
+                        <textarea name="title" class="form-control" placeholder="Write a caption..." id="" cols="30" rows="5"></textarea>
+                    </div>
                     <div class="d-flex justify-content-center">
                         <button type="submit" class="btn-grad clr rounded-pill mt-4">Post</button>
                     </div>
                 </div>
             </div>
         </form>
+        
+        <script>
+            function previewImage(input) {
+                var file = input.files[0];
+                var reader = new FileReader();
+                var firstImg = document.querySelector('.upload-img');
+        
+                reader.onload = function (e) {
+                    firstImg.src = e.target.result;
+                };
+        
+                if (file) {
+                    reader.readAsDataURL(file);
+                }
+            }
+        </script>
+        
     </div>
 </div>
 {%endblock%}

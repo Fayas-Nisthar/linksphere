@@ -30,6 +30,7 @@ urlpatterns = [
     path('linkshpere/profile/<int:pk>/',views.ProfileDetailView.as_view(),name="profile-details"),
     path('linkshpere/profile/all/',views.ProfileListView.as_view(),name="profile-list"),
     path('linksphere/post/add/',views.PostUploadView.as_view(),name="upload-post"),
+    path('linkshpere/post/<int:pk>/delete/',views.PostDeleteView.as_view(),name="post-delete"),
     path('linksphere/profile/<int:pk>/follow/',views.FollowsView.as_view(),name="follow"),
     path('linksphere/post/<int:pk>/like/',views.PostLikeView.as_view(),name="like"),
     path('linksphere/post/<int:pk>/comment/add/',views.CommentView.as_view(),name="comment"),

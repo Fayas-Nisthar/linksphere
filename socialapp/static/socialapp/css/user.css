@@ -269,3 +269,24 @@ font-size: 12px;
   left: 544px;
   top: 3%;
 }
+
+.proimg{
+  position: relative;
+}
+.proimg .options{
+  position: absolute;
+  right: 0;
+}
+.pro-relative{
+  position: relative;
+}
+.pro-absolute{
+  position: absolute;
+  left: 100px;
+  top: 80px;
+}
+.post-position{
+  position: absolute;
+  top: 70%;
+  margin-top: 15px;
+}

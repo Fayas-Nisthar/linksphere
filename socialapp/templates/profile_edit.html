@@ -16,10 +16,33 @@
                             <img class="profile-pic shadow" src="{%static 'socialapp/images/profilepic.png'%}" alt="Avatar" style="border-radius: 50%;
                             background-color: rgb(68, 68, 68);">
                         {%endif%}
-                            <input type="file" name="profile_pic" id="fileToUpload" accept="image/*">
+                            <input type="file" class="load" name="profile_pic" id="fileToUpload" accept="image/*" onchange="previewImage(this)">
                             <span class="glyphicon glyphicon-camera"></span>
                         </div>
                     </label>
+                    <div id="imagePreview" style="display: none;">
+                        <img id="previewImg" alt="Image Preview">
+                    </div>
+                    
+                    <script>
+                        function previewImage(input) {
+                            var file = input.files[0];
+                            var reader = new FileReader();
+                            var previewImg = document.getElementById('previewImg');
+                            var imagePreview = document.getElementById('imagePreview');
+                            var profilePic = document.querySelector('.profile-pic');
+                    
+                            reader.onload = function (e) {
+                                profilePic.src = e.target.result; // Set the preview image source to the profile pic
+                                imagePreview.style.display = 'none'; // Hide the extra preview container
+                            };
+                    
+                            if (file) {
+                                reader.readAsDataURL(file);
+                            }
+                        }
+                    </script>
+                    
                     <!-- ============Profile pic change end -->
                     <div class="text-white tefw-bold">
                         {{request.user}}

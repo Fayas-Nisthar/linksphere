@@ -116,7 +116,20 @@
         <div class="row ms-1 mt-2 mb-5">
             {%for img in data.user.userpost.all%}
                 {%if img.post_image%}
-                <div class="col-4">
+                <div class="col-3 proimg">
+                    {%if request.user == data.user%}
+                        <div class="btn-group options ">
+                          <a href="" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical" style="color: black;"></i></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="" class="dropdown-item">Edit</a>
+                                </li>
+                                <li>
+                                    <a href="{%url 'post-delete' img.id%}" class="dropdown-item text-danger">Delete</a>
+                                </li>
+                            </ul>
+                        </div>
+                    {%endif%}
                     <img src="{{img.post_image.url}}" class="h-100 w-100" alt="">
                 </div>
                 {%endif%}
